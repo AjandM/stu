@@ -1,0 +1,83 @@
+function printRcpt() {
+    jQuery('#result').html("<ul id='printResult' style='list-style: none;margin:0 !important; padding:0 !important;'>");
+    var list = jQuery('#printResult');
+
+    data = {
+        result: {
+            valid: true,
+            deliverDate: '4/10/1396',
+            deliverTime: '20:02:32',
+            username: '۹۲۵۴۲۲۱۷',
+            self: 'سلف کوی بسیج',
+            meal: 'شام',
+            foodType: 'غذای نوع ۲',
+            count: '۱',
+            foodName: 'خوراک کتلت'
+        }
+    }
+
+
+
+
+
+
+
+    if (data.result.valid) {
+        jQuery.each(data, function (index, value) {
+            list.append('<li><span style="float:left; font-size: 15pt;">' + data.result.deliverDate + '</span><span style="float:right; font-size: 15pt;">' + data.result.deliverTime + '</span><br style="clear:both;" /></li>\n');
+            list.append('<li><span style="text-align:center;display:block;font-weight:bold; font-size: 15pt;">' + data.result.username + '</span></li>\n');
+            list.append('<li><span style="font-size: 15pt;">' + data.result.self + '</span></li>\n');
+            list.append('<li><span style="font-size: 15pt;">' + data.result.meal + ' - ' + data.result.foodType + '</span></li>\n');
+            list.append('<li><span style="font-size: 15pt;"> تعداد : ' + data.result.count + '</span></li>\n');
+            list.append('<li><span style="text-align:center;display:block;font-weight:bold;font-size: 15pt;">' + data.result.foodName + '</span></li>\n');
+        });
+        try {
+            var headstr1 = "<";
+            var headstr2 = "html";
+            var headstr3 = "><";
+            var headstr4 = "head";
+            var headstr5 = "><";
+            var headstr6 = "title";
+            var headstr7 = "></";
+            var headstr8 = "title";
+            var headstr9 = "></";
+            var headstr10 = "head";
+            var headstr11 = "><";
+            var headstr12 = "body";
+            var headstr13 = ">";
+            var footstr1 = '</';
+            var footstr2 = 'body';
+            var footstr3 = '>';
+            var newstr = document.getElementById('resultParent').innerHTML;
+            rcpt = headstr1 + headstr2 + headstr3 + headstr4 + headstr5 + headstr6 + headstr7 + headstr8 + headstr9 + headstr10 + headstr11 + headstr12 + headstr13 + newstr + footstr1 + footstr2 + footstr3;
+            console.log(rcpt)
+            $("#reserveListDiv").load('list-detail.rose', function (data) {
+                printRcptAndRestore(rcpt);
+                //                        alert(222);
+            });
+
+        } catch (err) {
+            alert("خطایی در هنگام پرینت رخ داد");
+        }
+    } else {
+        alert(data.result.htmlMessage);
+    }
+}
+function printRcptAndRestore(rcpt) {
+    var oldstr;
+    try {
+
+        oldstr = document.body.innerHTML;
+
+        document.body.innerHTML = rcpt;
+
+        printPage();
+    } catch (err) {
+        alert("خطایی در هنگام پرینت رخ داد");
+    } finally {
+        document.body.innerHTML = rcpt;
+        rebindMenu();
+    }
+}
+
+printRcpt()
